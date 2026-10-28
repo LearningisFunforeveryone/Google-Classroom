@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NightView Browser</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0d12;--panel:#141821;--line:#252b38;--text:#f4f6fb;--muted:#a6afc0;--accent:#8b7bff}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#1b1d35 0,#0b0d12 55%);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
+main{width:min(920px,calc(100% - 32px));margin:0 auto;padding:8vh 0 48px}
+.brand{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:42px}
+.logo{display:grid;place-items:center;width:48px;height:48px;border-radius:15px;background:linear-gradient(135deg,#a69bff,#6151d9);font-weight:900;font-size:24px;color:#fff;box-shadow:0 8px 35px #7263ff30}
+h1{font-size:clamp(28px,5vw,42px);letter-spacing:-1.5px;margin:0}
+.sub{color:var(--muted);margin:4px 0 0}
+.search-card{background:#11151ddd;border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:0 24px 80px #0005}
+.tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.tab{border:1px solid var(--line);background:#191e29;color:var(--muted);padding:8px 13px;border-radius:10px;cursor:pointer}
+.tab.active{background:#282447;color:#fff;border-color:#6559c8}
+form{display:flex;gap:10px}
+input{min-width:0;flex:1;background:#090c12;border:1px solid #303747;color:#fff;border-radius:13px;padding:16px;font:inherit;outline:none}
+input:focus{border-color:var(--accent);box-shadow:0 0 0 3px #8b7bff20}
+button.go{border:0;border-radius:13px;background:var(--accent);color:#fff;font:700 15px system-ui;padding:0 22px;cursor:pointer}
+button.go:hover{filter:brightness(1.12)}
+.hint{font-size:13px;color:var(--muted);margin:12px 3px 0}
+h2{font-size:15px;color:#c5cbe0;font-weight:650;margin:30px 2px 12px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.tile{background:#121721;border:1px solid var(--line);border-radius:16px;padding:17px 12px;text-decoration:none;color:var(--text);transition:transform .15s,border-color .15s}
+.tile:hover{transform:translateY(-2px);border-color:#6359b4}
+.tile-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:#22283a;margin-bottom:12px;font-size:18px}
+.tile strong{display:block;font-size:14px}
+.tile span{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+.note{margin-top:28px;padding:14px 16px;border:1px solid var(--line);border-radius:13px;color:var(--muted);font-size:13px}
+footer{text-align:center;color:#747e91;font-size:12px;margin-top:28px}
+@media(max-width:620px){main{padding-top:6vh}.tiles{grid-template-columns:repeat(2,1fr)}form{flex-direction:column}button.go{padding:14px}.brand{margin-bottom:28px}}
+</style>
+</head>
+<body>
+<main>
+  <header class="brand">
+    <div class="logo">N</div>
+    <div><h1>NightView</h1><p class="sub">A clean place to start browsing</p></div>
+  </header>
+  <section class="search-card">
+    <div class="tabs" aria-label="Search provider">
+      <button class="tab active" type="button" data-engine="https://www.google.com/search?q=">Google</button>
+      <button class="tab" type="button" data-engine="https://www.bing.com/search?q=">Bing</button>
+      <button class="tab" type="button" data-engine="https://duckduckgo.com/?q=">DuckDuckGo</button>
+    </div>
+    <form id="searchForm">
+      <input id="address" autocomplete="url" placeholder="Search the web or enter a website…" aria-label="Search or website address" required>
+      <button class="go" type="submit">Go ↗</button>
+    </form>
+    <p class="hint">Type a search, or enter a website such as example.com. Opens in this tab.</p>
+  </section>
+  <h2>QUICK LINKS</h2>
+  <section class="tiles">
+    <a class="tile" href="https://www.google.com"><div class="tile-icon">⌕</div><strong>Google</strong><span>Search the web</span></a>
+    <a class="tile" href="https://www.wikipedia.org"><div class="tile-icon">W</div><strong>Wikipedia</strong><span>Explore topics</span></a>
+    <a class="tile" href="https://www.britannica.com"><div class="tile-icon">B</div><strong>Britannica</strong><span>Reference articles</span></a>
+    <a class="tile" href="https://www.khanacademy.org"><div class="tile-icon">✦</div><strong>Khan Academy</strong><span>Learn and practice</span></a>
+    <a class="tile" href="https://www.nationalgeographic.com"><div class="tile-icon">▣</div><strong>National Geographic</strong><span>Science and nature</span></a>
+    <a class="tile" href="https://www.youtube.com"><div class="tile-icon">▶</div><strong>YouTube</strong><span>Videos</span></a>
+    <a class="tile" href="https://news.google.com"><div class="tile-icon">▤</div><strong>Google News</strong><span>Current events</span></a>
+    <a class="tile" href="https://www.archive.org"><div class="tile-icon">⌂</div><strong>Internet Archive</strong><span>Digital library</span></a>
+  </section>
+  <div class="note"><strong>Heads up:</strong> This is a lightweight browser homepage, not a proxy or remote-browser server. It cannot bypass school network restrictions, and some links may be blocked by your network.</div>
+  <footer>NightView · Simple web start page</footer>
+</main>
+<script>
+let engine='https://www.google.com/search?q=';
+document.querySelectorAll('.tab').forEach(tab=>tab.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  tab.classList.add('active'); engine=tab.dataset.engine;
+}));
+document.getElementById('searchForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const raw=document.getElementById('address').value.trim();
+  if(!raw)return;
+  let target;
+  if(/^https?:\/\//i.test(raw)) target=raw;
+  else if(/^(localhost|[\w-]+\.)+[a-z]{2,}([/:?#].*)?$/i.test(raw) && !/\s/.test(raw)) target='https://'+raw;
+  else target=engine+encodeURIComponent(raw);
+  window.location.assign(target);
+});
+</script>
+</body>
+</html>
